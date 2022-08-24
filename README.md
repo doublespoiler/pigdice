@@ -49,6 +49,12 @@ Expected result:
 
 Describe: Score.prototype.rollDice()
 
+Test 1: it will roll the dice, and if the player rolls a 1, it sets the score to 0 and returns "false," otherwise it adds the number to their score and returns "true"
+Code: player1Score.rollDice();
+Expected result:
+  "Player rolled 1" false
+  or
+  turnScore value true
 
 Game constructor?
 -Dice
