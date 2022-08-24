@@ -40,6 +40,10 @@ Expected Result:
 
 
 
+Describe: Score.Object
+
+Test 1: scoreTurn will hold value of rolls;
+Code:  
 
 
 Game constructor?
@@ -57,3 +61,10 @@ Score constructor
 
 Turn Changer Function
 - activeplayer
+
+
+function changeTurn(result){
+  if (result === "false"){
+    //change active player
+  }
+}
