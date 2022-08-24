@@ -43,7 +43,11 @@ Expected Result:
 Describe: Score.Object
 
 Test 1: scoreTurn will hold value of rolls;
-Code:  
+Code: const player1Score = new Score("player1");
+Expected result:
+  undefined
+
+Describe: Score.prototype.rollDice()
 
 
 Game constructor?

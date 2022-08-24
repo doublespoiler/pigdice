@@ -5,15 +5,20 @@ function rollDice(){
 }
 
 function Score(playerName){
-	this.turnScore = 0
+	this.turnScore = 0;
+  this.gameScore = 0;
 }
 
-Score.prototype.rollDice = function(){
+Score.prototype.rollDice = function(){ //returns if the player gets to keep playing
 	const roll = rollDice();
 	if (roll === 1) {
-		return false
+    this.turnScore = 0;
+    console.log("Player rolled 1");
+		return false;
 	}	else {
-		this.turnScore += roll
+		this.turnScore += roll;
+    console.log(this.turnScore);
+    return true;
 	}
 }
 
