@@ -21,4 +21,3 @@ Score.prototype.rollDice = function(){ //returns if the player gets to keep play
     return true;
 	}
 }
-

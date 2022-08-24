@@ -49,6 +49,31 @@ Expected result:
 
 Describe: Score.prototype.rollDice()
 
+Test 1: it will roll the dice, and if the player rolls a 1, it sets the score to 0 and returns "false," otherwise it adds the number to their score and returns "true"
+Code: 
+const player1Score = new Score("player1");
+player1Score.rollDice();
+Expected result:
+  "Player rolled 1" false
+  or
+  turnScore value true
+
+Describe: Score.prototype.holdScore()
+
+Test 1: It will add the turn score to the game score and return "true"
+Code:
+  const player1Score = new Score("player1");
+  player1Score.rollDice();
+  player1Score.rollDice();
+  player1Score.holdScore();
+Expected Result:
+  Y
+  X
+  X, true
+
+
+
+
 
 Game constructor?
 -Dice
