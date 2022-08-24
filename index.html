@@ -4,9 +4,53 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link href="css/styles.css" rel="stylesheet" type="text/css">
+  <script src="js/scripts.js"></script>
+  <title>Pig Dice Paradise</title>
 </head>
 <body>
-  
+  <div class="header">
+    <h2>Welcome to a land of beauty and chance!</h2>
+  </div>
+  <div class="container">
+    <div class="player-input" id="player-input">
+      <form id="player-name-input">
+        <p>Place the names of both players in the following fields!</p>
+        <label name="player-one">Player One (will go first)</label>
+        <input type="text" name="player-one" id="player-one"><br>
+        <label name="player-two">Player Two</label>
+        <input type="text" name="player-two" id="player-two">
+        <button class="btn" name="player-submit" id="player-submit">TEST YOUR MIGHT (PLEASE)</button>
+      </form>
+    </div>
+    <div class="hidden row" id="play-field">
+      <div class="col-md-6" id="player-one-field">
+        <div class="roll-display" id="play-one-roll">
+
+        </div>
+        <div class="user-interface" id="play-one-ui">
+          <button type="button" id="p1-roll-btn">Roll</button>
+          <button type="button" id="p1-hold-btn">Hold</button>
+        </div>
+        <div class="score-display" id="play-one-score">
+          <h1>Turn rolls: <span id="p1-turn-score">UN</span></h1>
+          <h1>Total score: <span id="p1-game-score">UN</span></h1>
+        </div>
+      </div>
+      <div class="col-md-6" id="player-two-field">
+        <div class="roll-display" id="play-two-roll">
+
+        </div>
+        <div class="user-interface" id="play-two-ui">
+          <button type="button" id="p2-roll-btn">Roll</button>
+          <button type="button" id="p2-hold-btn">Hold</button>
+        </div>
+        <div class="score-display" id="play-two-score">
+          <h1>Turn rolls: <span id="p2-turn-score"></span></h1>
+          <h1>Total score: <span id="p2-game-score"></span></h1>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
