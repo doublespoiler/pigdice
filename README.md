@@ -73,7 +73,35 @@ Expected Result:
   X
   X, true
 
-Describe 
+Describe Game.prototype.changeTurn()
+
+Test 1: It will change Game.activePlayer between 1 and 2 when it takes "true"
+Code:
+let player1 = new Player("Saul");
+let player2 = new Player("Cindy");
+let game = new Game(player1, player2);
+changeTurn(true);
+changeTurn(true);
+changeTurn(true);
+changeTurn(false);
+Expected Result:
+Active Player = 2
+Active Player = 1
+Active Player = 2
+Active Player = 2
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Game constructor?

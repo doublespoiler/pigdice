@@ -4,7 +4,15 @@ function rollDice(){
 	return Math.floor(Math.random() * (7 - 1) + 1);
 }
 
-function Player(playerName){
+function Game(player1, player2){
+	this.firstPlayer = player1;
+	this.secondPlayer = player2;
+	this.activePlayer = 1;
+
+}
+
+function Player(inputName){
+  this.playerName = inputName;
 	this.turnScore = 0;
   this.gameScore = 0;
 }
@@ -15,11 +23,11 @@ Player.prototype.rollDice = function(){ //returns if the player gets to keep pla
     this.turnScore = 0;
     console.log("Player rolled 1");
     changeTurn();
-		return false;
+		return true;
 	}	else {
 		this.turnScore += roll;
     console.log(this.turnScore);
-    return true;
+    return false;
 	}
 }
 
@@ -28,10 +36,4 @@ Player.prototype.holdScore = function(){ //returns true to pass player turn
   console.log(this.gameScore);
   changeTurn();
   return true;
-}
-
-function changeTurn(changeTurn){
-  let activePlayer = 1;
-
-  return activePlayer;
 }
