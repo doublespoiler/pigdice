@@ -22,7 +22,6 @@ Player.prototype.rollDice = function(){ //returns if the player gets to keep pla
 	if (roll === 1) {
     this.turnScore = 0;
     console.log("Player rolled 1");
-    changeTurn();
 		return true;
 	}	else {
 		this.turnScore += roll;
@@ -31,9 +30,22 @@ Player.prototype.rollDice = function(){ //returns if the player gets to keep pla
 	}
 }
 
+Game.prototype.changeTurn = function(input){
+	if (input === true) {
+		if (this.activePlayer === 1){
+			this.activePlayer = 2;
+      console.log("Active player =" + this.activePlayer);
+		} else {
+			this.activePlayer = 1;
+      console.log("Active player =" + this.activePlayer);
+		}
+	} else {
+    console.log("Active player =" + this.activePlayer);
+  }
+}
+
 Player.prototype.holdScore = function(){ //returns true to pass player turn
   this.gameScore += this.turnScore;
   console.log(this.gameScore);
-  changeTurn();
   return true;
 }
