@@ -56,12 +56,11 @@ Game.prototype.changeTurn = function(){
 		this.activePlayer = 2;
 		document.querySelector("div#play-one-buttons").classList.add("hidden");
     document.querySelector("div#play-two-buttons").classList.remove("hidden");
-		document.querySelector("span#play-one-turn").innerText = "0";
+		
 	} else {
 		this.activePlayer = 1;
 		document.querySelector("div#play-two-buttons").classList.add("hidden");
     document.querySelector("div#play-one-buttons").classList.remove("hidden");
-		document.querySelector("span#play-two-turn").innerText = "0";
 	}
 }
 
@@ -80,7 +79,12 @@ function nameSubmit(event){
 	p1Roll.addEventListener("click", function(){
 		let lastRoll = playerOne.roll();
 		console.log(lastRoll);
-		document.querySelector("span#play-one-turn").innerText = playerOne.turnScore;
+		if (lastRoll === 1) {
+			document.querySelector("span#play-one-turn").innerText = "1! Pass!";
+		} else {
+			document.querySelector("span#play-one-turn").innerText = playerOne.turnScore;
+		}
+		
 	});
 	document.getElementById("play-one-hold").addEventListener("click", function(){
 		playerOne.holdScore();
@@ -91,7 +95,11 @@ function nameSubmit(event){
 	p2Roll.addEventListener("click", function(){
 		let lastRoll = playerTwo.roll();
 		console.log(lastRoll);
-		document.querySelector("span#play-two-turn").innerText = playerTwo.turnScore;
+		if (lastRoll === 1) {
+			document.querySelector("span#play-two-turn").innerText = "1! Pass!";
+		} else {
+			document.querySelector("span#play-two-turn").innerText = playerTwo.turnScore;
+		}
 	});
 	document.getElementById("play-two-hold").addEventListener("click", function(){
 		playerTwo.holdScore();
