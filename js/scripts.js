@@ -1,14 +1,9 @@
 // Business Logic
 
-function rollDice(){
-	return Math.floor(Math.random() * (7 - 1) + 1);
-}
-
 function Game(player1, player2){
-	this.firstPlayer = player1;
-	this.secondPlayer = player2;
+	this.player1 = player1;
+	this.player2 = player2;
 	this.activePlayer = 1;
-
 }
 
 function Player(inputName){
@@ -17,24 +12,20 @@ function Player(inputName){
   this.gameScore = 0;
 }
 
-function changeScore(){
-	console.log("Changing score, p1: " + game.firstPlayer.turnScore + " p2: " + game.secondPlayer.turnScore);
-	p1TurnDisplay = game.firstPlayer.turnScore;
-	p2TurnDisplay = game.secondPlayer.turnScore;
-}
-
-Player.prototype.rollDice = function(){ //returns false if the player gets to keep playing
-	const roll = rollDice();
+Player.prototype.roll = function(){ 
+	const roll = Math.floor(Math.random() * (7 - 1) + 1);
 	console.log("Roll " + roll);
 	if (roll === 1) {
     this.turnScore = 0;
     console.log("Player rolled 1");
-		game.changeTurn(true)
-		changeScore();
+		game.changeTurn();
+		return roll;
 	}	else {
 		this.turnScore += roll;
+		console.log("roll: " + roll);
     console.log("Turn score: " + this.turnScore);
-		changeScore();
+		console.log(typeof this.turnScore);
+		return roll;
 	}
 }
 
@@ -42,81 +33,95 @@ Player.prototype.holdScore = function(){
   this.gameScore += this.turnScore;
 	this.turnScore = 0
   console.log("Game score: " + this.gameScore);
-  game.changeTurn(true)
-	changeScore();
+	if (this.gameScore >= 100) {
+		this.wins();
+	}
+  return this.gameScore;
 }
 
 
+
+
+
+let game;
 
 // User Interface Logic
 
-function nameSubmit(event){
-	event.preventDefault();
-	const player1Name = document.getElementById("player-one").value;
-	const player2Name = document.getElementById("player-two").value;
-
-	const player1 = new Player(player1Name);
-	const player2 = new Player(player2Name);
-// *possible* necessity to rename player name variables in this area, pin in it~~
-	game = new Game(player1, player2);
-	console.log("Line after game is defined, game is " + game);
-	console.log("first player: " + game.firstPlayer.playerName);
-	console.log("second player: " + game.secondPlayer.playerName);
-	console.log("active player: " + game.activePlayer);
-	const playerInput = document.getElementById("player-input");
-	playerInput.className = "hidden player-input"
-	const playField = document.getElementById("play-field");
-	playField.className = "row";
-
-	const p1TurnRoll = game.firstPlayer.turnScore;
-	const p1TurnDisplay = document.getElementById("p1-turn-score");
-	p1TurnDisplay.innerText = p1TurnRoll;
-	const p2TurnRoll = game.secondPlayer.turnScore;
-	const p2TurnDisplay = document.getElementById("p2-turn-score");
-	p2TurnDisplay.innerText = p2TurnRoll;
-
-	const p1Roll = document.getElementById("p1-roll-btn");
-	const p1Hold = document.getElementById("p1-hold-btn");
-	p1Roll.addEventListener("click", game.firstPlayer.rollDice);
-	p1Hold.addEventListener("click", game.firstPlayer.holdScore);
+Player.prototype.wins = function(){
+	window.alert(this.playerName + "wins!");
 }
 
-Game.prototype.changeTurn = function(input){
-	const p1Roll = document.getElementById("p1-roll-btn");
-	const p1Hold = document.getElementById("p1-hold-btn");
-	const p2Roll = document.getElementById("p2-roll-btn");
-	const p2Hold = document.getElementById("p2-hold-btn");
-	if (input === true) {
-		if (this.activePlayer === 1){
-			this.activePlayer = 2;
-			p2Roll.addEventListener("click", game.secondPlayer.rollDice);
-			p2Hold.addEventListener("click", game.secondPlayer.holdScore);
-			p1Roll.removeEventListener("click", game.firstPlayer.rollDice);
-			p1Hold.removeEventListener("click", game.firstPlayer.holdScore);
-      console.log("Active player =" + this.activePlayer);
-		} else {
-			this.activePlayer = 1;
-			p1Roll.addEventListener("click", game.firstPlayer.rollDice);
-			p1Hold.addEventListener("click", game.firstPlayer.holdScore);
-			p2Roll.removeEventListener("click", game.secondPlayer.rollDice);
-			p2Hold.removeEventListener("click", game.secondPlayer.holdScore);
-      console.log("Active player =" + this.activePlayer);
-		}
+Game.prototype.changeTurn = function(){
+	if (this.activePlayer === 1) {
+		this.activePlayer = 2;
+		document.querySelector("div#play-one-buttons").classList.add("hidden");
+    document.querySelector("div#play-two-buttons").classList.remove("hidden");
+		document.querySelector("span#play-one-turn").innerText = "0";
 	} else {
-    console.log("Active player =" + this.activePlayer);
-  }
+		this.activePlayer = 1;
+		document.querySelector("div#play-two-buttons").classList.add("hidden");
+    document.querySelector("div#play-one-buttons").classList.remove("hidden");
+		document.querySelector("span#play-two-turn").innerText = "0";
+	}
+}
+
+function nameSubmit(event){
+	event.preventDefault();
+	const playerOneName = document.querySelector("input#player-one").value;
+	const playerTwoName = document.querySelector("input#player-two").value;
+	let playerOne = new Player(playerOneName);
+	let playerTwo = new Player(playerTwoName);
+	game = new Game(playerOne, playerTwo);
+	document.getElementById("play-field").classList.remove("hidden");
+	document.getElementById("player-input").classList.add("hidden");
+	document.getElementById("play-one-name").innerText = playerOneName;
+	document.getElementById("play-two-name").innerText = playerTwoName;
+	p1Roll = document.querySelector("button#play-one-roll");
+	p1Roll.addEventListener("click", function(){
+		let lastRoll = playerOne.roll();
+		console.log(lastRoll);
+		document.querySelector("span#play-one-turn").innerText = playerOne.turnScore;
+	});
+	document.getElementById("play-one-hold").addEventListener("click", function(){
+		playerOne.holdScore();
+		document.querySelector("span#play-one-game").innerText = playerOne.gameScore;
+		game.changeTurn();
+	})
+	p2Roll = document.querySelector("button#play-two-roll");
+	p2Roll.addEventListener("click", function(){
+		let lastRoll = playerTwo.roll();
+		console.log(lastRoll);
+		document.querySelector("span#play-two-turn").innerText = playerTwo.turnScore;
+	});
+	document.getElementById("play-two-hold").addEventListener("click", function(){
+		playerTwo.holdScore();
+		document.querySelector("span#play-two-game").innerText = playerTwo.gameScore;
+		game.changeTurn();
+	})
+
+
 }
 
 window.addEventListener("load", function(){
-	const playerInputForm = document.getElementById("player-name-input");
-	const p1Display = document.getElementById("play-one-roll");
-	const p1Score = document.getElementById("play-one-score");
-	const p2Display = document.getElementById("play-two-roll");
-	const p2Score = document.getElementById("play-two-score");
-
-	playerInputForm.addEventListener("submit", nameSubmit);
+	document.getElementById("player-name-input").addEventListener("submit", nameSubmit);
 
 });
+// game
+// 	player1 = playerObject
+// 	player2 = playerObject
+// 	activePlayer = true;
+
+// player
+// 	player turn
+// 		while player's turn
+// 			while last roll !== 1
+// 				roll 
+// 					last roll = roll 
+// 					roundscore += roll
+// 				hold 
+// 					gamescore += roundscore
+// 					activePlayer = !thisplayerturn
+		
 
 
 
